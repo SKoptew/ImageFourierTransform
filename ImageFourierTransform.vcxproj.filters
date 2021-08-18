@@ -24,12 +24,18 @@
     <ClInclude Include="BufferConversions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FourierTransform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BufferConversions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FourierTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

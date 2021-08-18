@@ -142,9 +142,11 @@
     <ClInclude Include="BMP.h" />
     <ClInclude Include="BufferConversions.h" />
     <ClInclude Include="Complex.h" />
+    <ClInclude Include="FourierTransform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BufferConversions.cpp" />
+    <ClCompile Include="FourierTransform.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
