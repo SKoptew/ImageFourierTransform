@@ -42,3 +42,29 @@ void ComplexArrayToImage(Complex* data, BMP* img)
 		img->set_pixel(x, y, magnitude, magnitude, magnitude);
 	}
 }
+
+void ComplexArrayLogToImage(Complex* data, BMP* img)
+{
+	const int w = img->Width();
+	const int h = img->Height();
+	const size_t sz = w * h;
+
+	// find max element
+	float max_magnitude = 0;
+	for (size_t i = 0; i < sz; ++i)
+	{
+		const float magnitude = data[i].abs();
+		max_magnitude = magnitude > max_magnitude ? magnitude : max_magnitude;
+	}
+
+	const float C = 1.f / log(1.f + max_magnitude);
+
+	for (uint32_t y = 0; y < h; ++y)
+	for (uint32_t x = 0; x < w; ++x)
+	{
+		const float magnitude = data[y * w + x].abs();
+		const float val = C * log(1.f + magnitude);
+
+		img->set_pixel(x, y, val, val, val);
+	}
+}

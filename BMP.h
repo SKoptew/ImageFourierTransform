@@ -186,9 +186,9 @@ struct BMP
         uint32_t channels = bmp_info_header.bit_count / 8;
         uint32_t offset = channels * (y0 * bmp_info_header.width + x0);
 
-        data[offset + 0] = uint8_t(B * 255.99f);
-        data[offset + 1] = uint8_t(G * 255.99f);
-        data[offset + 2] = uint8_t(R * 255.99f);
+        data[offset + 0] = uint8_t(B * 255.5f);
+        data[offset + 1] = uint8_t(G * 255.5f);
+        data[offset + 2] = uint8_t(R * 255.5f);
     }
 
     void set_pixel(uint32_t x0, uint32_t y0, uint8_t R, uint8_t G, uint8_t B)

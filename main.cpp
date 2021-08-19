@@ -4,7 +4,8 @@
 int main(int argc, char* argv[])
 {
 	//auto img = new BMP("tank.bmp");
-	auto img = new BMP("tank_512.bmp");
+	//auto img = new BMP("tank_512.bmp");
+	auto img = new BMP("stripes.bmp");
 
 
 	Complex* buffer0 = CreateComplexBuffer(img->Width(), img->Height());
@@ -13,11 +14,10 @@ int main(int argc, char* argv[])
 	ImageToComplexArray(img, buffer0);
 
 	FourierTransform2D(buffer0, buffer1, img->Width(), img->Height());
-
-	// $$$ log conversion
-	// $$$ shift
+	FourierTransform2D(buffer0, buffer1, img->Width(), img->Height(), true);
 
 	ComplexArrayToImage(buffer0, img);
+	//ComplexArrayLogToImage(buffer0, img);
 	
 	DisposeComplexBuffer(buffer0);
 	DisposeComplexBuffer(buffer1);
