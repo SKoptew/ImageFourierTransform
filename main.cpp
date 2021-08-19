@@ -4,8 +4,8 @@
 int main(int argc, char* argv[])
 {
 	//auto img = new BMP("tank.bmp");
-	//auto img = new BMP("tank_512.bmp");
-	auto img = new BMP("stripes.bmp");
+	auto img = new BMP("tank_512.bmp");
+	//auto img = new BMP("stripes.bmp");
 
 
 	Complex* buffer0 = CreateComplexBuffer(img->Width(), img->Height());
