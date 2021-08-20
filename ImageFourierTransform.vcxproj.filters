@@ -5,37 +5,44 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Complex.h">
-      <Filter>Header Files</Filter>
+    <Image Include="data\stripes.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="data\tank_512.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="data\tank_2048.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\BMP.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="BMP.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\BufferConversions.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="BufferConversions.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Complex.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="FourierTransform.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\FourierTransform.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\BufferConversions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BufferConversions.cpp">
+    <ClCompile Include="src\FourierTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FourierTransform.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

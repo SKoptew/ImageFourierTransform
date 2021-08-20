@@ -139,15 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BMP.h" />
-    <ClInclude Include="BufferConversions.h" />
-    <ClInclude Include="Complex.h" />
-    <ClInclude Include="FourierTransform.h" />
+    <Image Include="data\stripes.bmp" />
+    <Image Include="data\tank_2048.bmp" />
+    <Image Include="data\tank_512.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BufferConversions.cpp" />
-    <ClCompile Include="FourierTransform.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClInclude Include="src\BMP.h" />
+    <ClInclude Include="src\BufferConversions.h" />
+    <ClInclude Include="src\Complex.h" />
+    <ClInclude Include="src\FourierTransform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\BufferConversions.cpp" />
+    <ClCompile Include="src\FourierTransform.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

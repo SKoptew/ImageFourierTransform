@@ -7,14 +7,12 @@
 
 int main(int argc, char* argv[])
 {
-	//auto img = new BMP("tank.bmp");
-	auto img = new BMP("tank_2048.bmp");
-	//auto img = new BMP("tank_512.bmp");
-	//auto img = new BMP("stripes.bmp");
-
+	auto img = new BMP("data/tank_2048.bmp");
+	//auto img = new BMP("data/tank_512.bmp");
+	//auto img = new BMP("data/stripes.bmp");
 
 	Complex* buffer0 = CreateComplexBuffer(img->Width(), img->Height());
-	Complex* buffer1 = CreateComplexBuffer(img->Width(), img->Height());
+	//Complex* buffer1 = CreateComplexBuffer(img->Width(), img->Height());
 
 	ImageToComplexArray(img, buffer0);
 
@@ -38,7 +36,7 @@ int main(int argc, char* argv[])
 	//ComplexArrayLogToImage(buffer0, img);
 	
 	DisposeComplexBuffer(buffer0);
-	DisposeComplexBuffer(buffer1);
+	//DisposeComplexBuffer(buffer1);
 	img->write("out.bmp");
 
 	return 0;
