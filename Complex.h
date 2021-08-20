@@ -19,6 +19,8 @@ struct Complex
 	Complex operator - (const Complex& rhs) const { return Complex(re - rhs.re, im - rhs.im); }
 	Complex operator * (const Complex& rhs) const { return Complex(re*rhs.re - im*rhs.im, im*rhs.re + re*rhs.im); }
 
+	Complex& operator *= (float rhs) { re *= rhs; im *= rhs; return *this; }
+
 	float abs()   const { return sqrt(re * re + im * im); }
 	float angle() const { return atan2(im, re); }
 };

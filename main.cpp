@@ -13,8 +13,11 @@ int main(int argc, char* argv[])
 
 	ImageToComplexArray(img, buffer0);
 
-	FourierTransform2D(buffer0, buffer1, img->Width(), img->Height());
-	FourierTransform2D(buffer0, buffer1, img->Width(), img->Height(), true);
+	//FourierTransform2D(buffer0, buffer1, img->Width(), img->Height());
+	//FourierTransform2D(buffer0, buffer1, img->Width(), img->Height(), true);
+
+	FFT2D(buffer0, img->Width(), img->Height());
+	FFT2D(buffer0, img->Width(), img->Height(), true);
 
 	ComplexArrayToImage(buffer0, img);
 	//ComplexArrayLogToImage(buffer0, img);
