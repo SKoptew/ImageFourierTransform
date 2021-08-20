@@ -85,36 +85,21 @@ void FFT2DRecursive(Complex* src, int w, int h, bool inverse)
 	}
 }
 //--------------------------------------------------------------------------------------------------------------------------
-
-int reverse_last_bits(int num, int lg_n)
-{
-	int res = 0;
-
-	for (int i = 0; i < lg_n; ++i)
-	if (num & (1 << i))
-	{
-		res |= 1 << (lg_n - 1 - i);
-	}
-	return res;
-}
-
 void FFT1D(Complex* src, int start, int stride, int N, bool inverse)
 {
-	//-- get lg(N)
-	int lg_n = 0;
-	while ((1 << lg_n) < N)
-		++lg_n;
-
-	//-- reorder elements
-	for (int i = 0; i < N; ++i)
+	//-- bit-reversal permutation of elements
+	for (int i = 1, i_rev = 0; i < N; ++i)
 	{
-		int i_rev = reverse_last_bits(i, lg_n);
-
+		int bit = N >> 1;
+		for (; i_rev >= bit; bit >>= 1)
+			i_rev -= bit;
+	
+		i_rev += bit;
+	
 		if (i < i_rev)
-		{
 			std::swap(src[start + i * stride], src[start + i_rev * stride]);
-		}
 	}
+
 
 	//-- convolve: pairs, quadruples, ...
 	for (int len = 2; len <= N; len <<= 1)
