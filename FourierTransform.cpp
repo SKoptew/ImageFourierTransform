@@ -101,8 +101,25 @@ void FFT1D(Complex* src, int start, int stride, int N, bool inverse)
 	}
 
 
-	//-- convolve: pairs, quadruples, ...
-	for (int len = 2; len <= N; len <<= 1)
+	//-- convolve: pairs
+	int len = 2;
+	{
+		for (int i = 0; i < N; i += len)
+		{
+			int idx_u = start +  i      * stride;
+			int idx_v = start + (i + 1) * stride;
+	
+			Complex u = src[idx_u];
+			Complex v = src[idx_v];
+	
+			src[idx_u] = u + v;
+			src[idx_v] = u - v;
+		}
+	}
+	len <<= 1;
+
+	//-- convolve: quadruples, ...
+	for (; len <= N; len <<= 1)
 	{
 		const float   angle = (inverse ? PI2 : -PI2) / len;
 		const Complex wlen  = Complex(cos(angle), sin(angle));
@@ -113,7 +130,7 @@ void FFT1D(Complex* src, int start, int stride, int N, bool inverse)
 
 			for (int j = 0; j < len / 2; ++j)
 			{
-				int idx_u = start + (i + j) * stride;
+				int idx_u = start + (i + j)           * stride;
 				int idx_v = start + (i + j + len / 2) * stride;
 
 				Complex u = src[idx_u];

@@ -1,3 +1,5 @@
+// based on https://github.com/sol-prog/cpp-bmp-images
+
 #pragma once
 #include <fstream>
 #include <vector>
