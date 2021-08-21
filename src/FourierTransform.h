@@ -6,5 +6,4 @@ void FT2D_Bruteforce(Complex* src, Complex* tmp, int w, int h, bool inverse = fa
 
 void FFT2D_CT_Recursive  (Complex* src, int w, int h, bool inverse = false); // Cooley-Turkey
 void FFT2D_CT_Bitreversal(Complex* src, int w, int h, bool inverse = false);
-
-void FT2D_Stockham(Complex* src, int w, int h, bool inverse);
+void FT2D_Stockham       (Complex* src, int w, int h, bool inverse = false);
