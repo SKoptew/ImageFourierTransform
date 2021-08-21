@@ -158,3 +158,95 @@ void FFT2D_CT_Bitreversal(Complex* src, int w, int h, bool inverse)
 			src[i] *= inv_N2;
 	}
 }
+//--------------------------------------------------------------------------------------------------------------------------
+
+// http://wwwa.pikara.ne.jp/okojisan/otfft-en/stockham2.html
+// N: sequence length
+// s: idx stride
+// eo : x is output if eo == true, y is output if eo == false
+// x, y - swappable buffers. input <-> output
+
+void FFT1D_Stockham(Complex* x, Complex *y, int N, int s, bool eo, bool inverse)
+{
+	const int M = N / 2;
+	const double theta0 = (inverse ? PI2 : -PI2) / N;
+
+	if (N == 1)
+	{
+		if (eo) // y is output
+		{
+			for (int q = 0; q < s; ++q)
+				y[q] = x[q];
+		}
+	}
+	else
+	{
+		for (int p = 0; p < M; ++p)
+		{
+			const float   phase = p * theta0;
+			const Complex wp = Complex(cos(phase), sin(phase));
+
+			for (int q = 0; q < s; ++q)
+			{
+				Complex a = x[q + s*(p + 0)];
+				Complex b = x[q + s*(p + M)];
+
+				y[q + s*(2*p + 0)] =  a + b;
+				y[q + s*(2*p + 1)] = (a - b) * wp;
+			}			
+		}
+		FFT1D_Stockham(y, x, N/2, 2*s, !eo, inverse); // $$$ tail recursion!
+	}
+}
+
+void FT2D_Stockham(Complex* src, int w, int h, bool inverse)
+{
+	//-- horizontal pass
+	{
+		Complex* row_x = new Complex[w];
+		Complex* row_y = new Complex[w];
+	
+		for (int y = 0; y < h; ++y)
+		{
+			for (int k = 0; k < w; ++k)
+				row_x[k] = src[y*w + k];
+	
+			FFT1D_Stockham(row_x, row_y, w, 1, false, inverse);
+	
+			for (int k = 0; k < w; ++k)
+				src[y*w + k] = row_x[k];
+		}
+	
+		delete[] row_x;
+		delete[] row_y;
+	}
+
+	//-- vertical pass
+	{
+		Complex* col_x = new Complex[h];
+		Complex* col_y = new Complex[h];
+	
+		for (int x = 0; x < w; ++x)
+		{
+			for (int k = 0; k < h; ++k)
+				col_x[k] = src[k*w + x];
+	
+			FFT1D_Stockham(col_x, col_y, h, 1, false, inverse);
+	
+			for (int k = 0; k < h; ++k)
+				src[k*w + x] = col_x[k];
+		}
+	
+		delete[] col_x;
+		delete[] col_y;
+	}
+
+	// normalization
+	if (!inverse)
+	{
+		const float inv_N2 = 1.f / (w * h);
+	
+		for (int i = 0; i < w * h; ++i)
+			src[i] *= inv_N2;
+	}
+}
