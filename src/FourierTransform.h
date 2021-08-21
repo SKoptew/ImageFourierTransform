@@ -2,7 +2,7 @@
 
 #include "Complex.h"
 
-void FourierTransform2D(Complex* src, Complex* dst, int w, int h, bool inverse = false);
+void FT2D_Bruteforce(Complex* src, Complex* tmp, int w, int h, bool inverse = false);
 
-void FFT2DRecursive(Complex* src, int w, int h, bool inverse = false);
-void FFT2D         (Complex* src, int w, int h, bool inverse = false);
+void FFT2D_CT_Recursive  (Complex* src, int w, int h, bool inverse = false); // Cooley-Turkey
+void FFT2D_CT_Bitreversal(Complex* src, int w, int h, bool inverse = false);

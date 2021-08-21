@@ -12,20 +12,20 @@ int main(int argc, char* argv[])
 	//auto img = new BMP("data/stripes.bmp");
 
 	Complex* buffer0 = CreateComplexBuffer(img->Width(), img->Height());
-	//Complex* buffer1 = CreateComplexBuffer(img->Width(), img->Height());
+	Complex* buffer1 = CreateComplexBuffer(img->Width(), img->Height());
 
 	ImageToComplexArray(img, buffer0);
 
 	auto c_start = std::clock();
 	{
-		//FourierTransform2D(buffer0, buffer1, img->Width(), img->Height());
-		//FourierTransform2D(buffer0, buffer1, img->Width(), img->Height(), true);
+		//FT2D_Bruteforce(buffer0, buffer1, img->Width(), img->Height());		// 311627 ms
+		//FT2D_Bruteforce(buffer0, buffer1, img->Width(), img->Height(), true);
 
-		//FFT2DRecursive(buffer0, img->Width(), img->Height());
-		//FFT2DRecursive(buffer0, img->Width(), img->Height(), true);
+		//FFT2D_CT_Recursive(buffer0, img->Width(), img->Height());				// 861 ms
+		//FFT2D_CT_Recursive(buffer0, img->Width(), img->Height(), true);
 
-		FFT2D(buffer0, img->Width(), img->Height());
-		FFT2D(buffer0, img->Width(), img->Height(), true);
+		FFT2D_CT_Bitreversal(buffer0, img->Width(), img->Height());				// 634 ms
+		FFT2D_CT_Bitreversal(buffer0, img->Width(), img->Height(), true);
 	}
 	auto c_end = std::clock();
 

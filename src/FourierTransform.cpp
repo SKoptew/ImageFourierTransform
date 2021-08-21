@@ -1,7 +1,8 @@
 #include "FourierTransform.h"
 #include <utility>
 
-void FourierTransform1D(Complex* src, Complex* dst, int start, int stride, int N, bool inverse)
+//-- naive implementation
+void FT1D_Bruteforce(Complex* src, Complex* dst, int start, int stride, int N, bool inverse)
 {
 	for (int k = 0; k < N; ++k) // calc column of FFT indexes
 	{
@@ -20,15 +21,15 @@ void FourierTransform1D(Complex* src, Complex* dst, int start, int stride, int N
 	}
 }
 
-void FourierTransform2D(Complex* src, Complex* tmp, int w, int h, bool inverse)
+void FT2D_Bruteforce(Complex* src, Complex* tmp, int w, int h, bool inverse)
 {
 	//-- horizontal pass
 	for (int y = 0; y < h; ++y)
-		FourierTransform1D(src, tmp, y*w, 1, w, inverse);
+		FT1D_Bruteforce(src, tmp, y*w, 1, w, inverse);
 
 	// vertical pass
 	for (int x = 0; x < w; ++x)
-		FourierTransform1D(tmp, src, x, w, h, inverse);
+		FT1D_Bruteforce(tmp, src, x, w, h, inverse);
 
 	// normalization
 	if (!inverse)
@@ -41,12 +42,12 @@ void FourierTransform2D(Complex* src, Complex* tmp, int w, int h, bool inverse)
 }
 //--------------------------------------------------------------------------------------------------------------------------
 
-void FFT1DRecursive(Complex* src, int start, int stride, int N, bool inverse)
+void FFT1D_CT_Recursive(Complex* src, int start, int stride, int N, bool inverse)
 {
 	if (N > 1)
 	{
-		FFT1DRecursive(src, start,          stride * 2, N/2, inverse);
-		FFT1DRecursive(src, start + stride, stride * 2, N/2, inverse);
+		FFT1D_CT_Recursive(src, start,          stride * 2, N/2, inverse);
+		FFT1D_CT_Recursive(src, start + stride, stride * 2, N/2, inverse);
 		
 		Complex twiddle = { 1.f, 0.f };
 		float   angle   = (inverse ? PI2 : -PI2) / N;
@@ -65,17 +66,14 @@ void FFT1DRecursive(Complex* src, int start, int stride, int N, bool inverse)
 	}
 }
 
-void FFT2DRecursive(Complex* src, int w, int h, bool inverse)
+void FFT2D_CT_Recursive(Complex* src, int w, int h, bool inverse)
 {
-	// horizontal pass
 	for (int y = 0; y < h; ++y)
-		FFT1DRecursive(src, y * w, 1, w, inverse);
+		FFT1D_CT_Recursive(src, y * w, 1, w, inverse);
 
-	// vertical pass
 	for (int x = 0; x < w; ++x)
-		FFT1DRecursive(src, x, w, h, inverse);
+		FFT1D_CT_Recursive(src, x, w, h, inverse);
 
-	// normalization
 	if (!inverse)
 	{
 		const float inv_N2 = 1.f / (w * h);
@@ -85,7 +83,7 @@ void FFT2DRecursive(Complex* src, int w, int h, bool inverse)
 	}
 }
 //--------------------------------------------------------------------------------------------------------------------------
-void FFT1D(Complex* src, int start, int stride, int N, bool inverse)
+void FFT1D_CT_Bitreversal(Complex* src, int start, int stride, int N, bool inverse)
 {
 	//-- bit-reversal permutation of elements
 	for (int i = 1, i_rev = 0; i < N; ++i)
@@ -99,7 +97,6 @@ void FFT1D(Complex* src, int start, int stride, int N, bool inverse)
 		if (i < i_rev)
 			std::swap(src[start + i * stride], src[start + i_rev * stride]);
 	}
-
 
 	//-- convolve: pairs
 	int len = 2;
@@ -145,17 +142,14 @@ void FFT1D(Complex* src, int start, int stride, int N, bool inverse)
 	}
 }
 
-void FFT2D(Complex* src, int w, int h, bool inverse)
+void FFT2D_CT_Bitreversal(Complex* src, int w, int h, bool inverse)
 {
-	// horizontal pass
 	for (int y = 0; y < h; ++y)
-		FFT1D(src, y * w, 1, w, inverse);
+		FFT1D_CT_Bitreversal(src, y * w, 1, w, inverse);
 
-	// vertical pass
 	for (int x = 0; x < w; ++x)
-		FFT1D(src, x, w, h, inverse);
+		FFT1D_CT_Bitreversal(src, x, w, h, inverse);
 
-	// normalization
 	if (!inverse)
 	{
 		const float inv_N2 = 1.f / (w * h);
