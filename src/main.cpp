@@ -12,9 +12,9 @@ int main(int argc, char* argv[])
     //auto img = new BMP("data/stripes.bmp");
 
     Complex* buffer0 = CreateComplexBuffer(img->Width(), img->Height());
-    //Complex* buffer1 = CreateComplexBuffer(img->Width(), img->Height());
+    Complex* buffer1 = CreateComplexBuffer(img->Width(), img->Height());
 
-    ImageToComplexArray(img, buffer0);
+    ImageToComplexArray(img, buffer0, buffer1);
 
     auto c_start = std::clock();
     {
@@ -35,11 +35,10 @@ int main(int argc, char* argv[])
     std::cout << std::fixed << std::setprecision(2) << "CPU time used: "
         << 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n";
 
-    ComplexArrayToImage(buffer0, img);
-    //ComplexArrayLogToImage(buffer0, img);
+    ComplexArrayToImage(img, buffer0, buffer1);
     
     DisposeComplexBuffer(buffer0);
-    //DisposeComplexBuffer(buffer1);
+    DisposeComplexBuffer(buffer1);
     img->write("out.bmp");
 
     return 0;
